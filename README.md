@@ -26,6 +26,11 @@ CP_ID - ID of this VCP
 PASSWORD - if used for OCPP Authentication, otherwise can be left blank
 ```
 
+Additional config:
+```
+INITIAL_SOC - initial state of charge of 'vehicle', increments by 1 on each meter values
+```
+
 Run OCPP 1.6:
 
 ```bash

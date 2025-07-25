@@ -1,6 +1,6 @@
 import type { VCP } from "./vcp";
 
-const METER_VALUES_INTERVAL_SEC = 15;
+const METER_VALUES_INTERVAL_SEC = 5;
 
 type TransactionId = string | number;
 
