@@ -27,6 +27,7 @@ class StartTransactionOcppMessage extends OcppOutgoing<
   StartTransactionReqType,
   StartTransactionResType
 > {
+  soc = process.env.INITIAL_SOC ?? 0;
   resHandler = async (
     vcp: VCP,
     call: OcppCall<z.infer<StartTransactionReqType>>,
@@ -37,6 +38,7 @@ class StartTransactionOcppMessage extends OcppOutgoing<
       idTag: call.payload.idTag,
       connectorId: call.payload.connectorId,
       meterValuesCallback: async (transactionState) => {
+        // todo: we no longer do anything dynamic with transaction state
         vcp.send(
           meterValuesOcppMessage.request({
             connectorId: call.payload.connectorId,
@@ -46,10 +48,69 @@ class StartTransactionOcppMessage extends OcppOutgoing<
                 timestamp: new Date().toISOString(),
                 sampledValue: [
                   {
-                    value: (transactionState.meterValue / 1000).toString(),
-                    measurand: "Energy.Active.Import.Register",
-                    unit: "kWh",
+                    "value": "56.7",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Current.Import",
+                    "location": "Outlet",
+                    "unit": "A"
                   },
+                  {
+                    "value": "60.6258",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Energy.Active.Import.Register",
+                    "location": "Outlet",
+                    "unit": "kWh"
+                  },
+                  {
+                    "value": "0.0994",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Energy.Active.Import.Interval",
+                    "location": "Outlet",
+                    "unit": "kWh"
+                  },
+                  {
+                    "value": "39.8",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Power.Active.Import",
+                    "location": "Outlet",
+                    "unit": "kW"
+                  },
+                  {
+                    "value": "701.6",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Voltage",
+                    "location": "Outlet",
+                    "unit": "V"
+                  },
+                  {
+                    value: `${++this.soc}`,
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "SoC",
+                    "location": "EV",
+                    "unit": "Percent"
+                  },
+                  {
+                    "value": "200",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Current.Offered",
+                    "location": "Outlet",
+                    "unit": "A"
+                  },
+                  {
+                    "value": "40000",
+                    "context": "Sample.Periodic",
+                    "format": "Raw",
+                    "measurand": "Power.Offered",
+                    "location": "Outlet",
+                    "unit": "W"
+                  }
                 ],
               },
             ],
