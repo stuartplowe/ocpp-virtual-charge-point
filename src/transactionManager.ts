@@ -69,11 +69,20 @@ export class TransactionManager {
     this.transactions.delete(transactionId);
   }
 
+  setMeterValue(transactionId: TransactionId, meterValue: number) {
+    const transaction = this.transactions.get(transactionId);
+    if (!transaction) {
+      throw new Error(`Transaction ${transactionId} not found`);
+    }
+
+    transaction.meterValue = Math.round(meterValue);
+  }
+
   getMeterValue(transactionId: TransactionId) {
     const transaction = this.transactions.get(transactionId);
     if (!transaction) {
       return 0;
     }
-    return (new Date().getTime() - transaction.startedAt.getTime()) / 100;
+    return transaction.meterValue;
   }
 }

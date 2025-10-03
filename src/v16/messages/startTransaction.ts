@@ -48,7 +48,7 @@ class StartTransactionOcppMessage extends OcppOutgoing<
                 timestamp: new Date().toISOString(),
                 sampledValue: [
                   {
-                    "value": "56.7",
+                    "value": `${Math.round(transactionState.meterValue / 720 * 100) / 100}`,
                     "context": "Sample.Periodic",
                     "format": "Raw",
                     "measurand": "Current.Import",
@@ -56,31 +56,15 @@ class StartTransactionOcppMessage extends OcppOutgoing<
                     "unit": "A"
                   },
                   {
-                    "value": "60.6258",
-                    "context": "Sample.Periodic",
-                    "format": "Raw",
-                    "measurand": "Energy.Active.Import.Register",
-                    "location": "Outlet",
-                    "unit": "kWh"
-                  },
-                  {
-                    "value": "0.0994",
-                    "context": "Sample.Periodic",
-                    "format": "Raw",
-                    "measurand": "Energy.Active.Import.Interval",
-                    "location": "Outlet",
-                    "unit": "kWh"
-                  },
-                  {
-                    "value": "39.8",
+                    "value": `${transactionState.meterValue}`,
                     "context": "Sample.Periodic",
                     "format": "Raw",
                     "measurand": "Power.Active.Import",
                     "location": "Outlet",
-                    "unit": "kW"
+                    "unit": "W"
                   },
                   {
-                    "value": "701.6",
+                    "value": "720",
                     "context": "Sample.Periodic",
                     "format": "Raw",
                     "measurand": "Voltage",
@@ -94,22 +78,6 @@ class StartTransactionOcppMessage extends OcppOutgoing<
                     "measurand": "SoC",
                     "location": "EV",
                     "unit": "Percent"
-                  },
-                  {
-                    "value": "200",
-                    "context": "Sample.Periodic",
-                    "format": "Raw",
-                    "measurand": "Current.Offered",
-                    "location": "Outlet",
-                    "unit": "A"
-                  },
-                  {
-                    "value": "40000",
-                    "context": "Sample.Periodic",
-                    "format": "Raw",
-                    "measurand": "Power.Offered",
-                    "location": "Outlet",
-                    "unit": "W"
                   }
                 ],
               },

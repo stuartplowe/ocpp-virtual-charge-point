@@ -22,6 +22,13 @@ class SetChargingProfileOcppMessage extends OcppIncoming<
     vcp: VCP,
     call: OcppCall<z.infer<SetChargingProfileReqType>>,
   ): Promise<void> => {
+    // if chargingProfilePurpose is TxProfile, we need to update the meter value
+    if (call.payload.csChargingProfiles.chargingProfilePurpose === "TxProfile" && call.payload.csChargingProfiles.transactionId) {
+      vcp.transactionManager.setMeterValue(
+        call.payload.csChargingProfiles.transactionId,
+        call.payload.csChargingProfiles.chargingSchedule.chargingSchedulePeriod[0].limit
+      );
+    }
     vcp.respond(this.response(call, { status: "Accepted" }));
   };
 }
