@@ -29,6 +29,7 @@ interface VCPOptions {
   chargePointId: string;
   basicAuthPassword?: string;
   adminPort?: number;
+  sendHeartbeatInTransaction?: boolean;
 }
 
 interface LogEntry {
@@ -159,7 +160,10 @@ export class VCP {
 
   configureHeartbeat(interval: number) {
     setInterval(() => {
-      this.send(heartbeatOcppMessage.request({}));
+      if (this.vcpOptions.sendHeartbeatInTransaction == false
+          && this.transactionManager.isInTransaction() == false) {
+        this.send(heartbeatOcppMessage.request({}));
+      }
     }, interval);
   }
 

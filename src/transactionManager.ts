@@ -33,6 +33,10 @@ export class TransactionManager {
     );
   }
 
+  isInTransaction() {
+    return this.transactions.size > 0;
+  }
+
   startTransaction(vcp: VCP, startTransactionProps: StartTransactionProps) {
     const meterValuesTimer = setInterval(() => {
       // biome-ignore lint/style/noNonNullAssertion: transaction must exist

@@ -11,6 +11,7 @@ const vcp = new VCP({
   ocppVersion: OcppVersion.OCPP_1_6,
   basicAuthPassword: process.env.PASSWORD ?? undefined,
   adminPort: Number.parseInt(process.env.ADMIN_PORT ?? "9999"),
+  sendHeartbeatInTransaction: process.env.SEND_HEARTBEAT_IN_TRANSACTION === 'false' ? false : true,
 });
 
 (async () => {
